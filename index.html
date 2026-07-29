@@ -10,13 +10,13 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f0f2f5; 
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background-color 0.5s;
+            transition: background-color 0.8s ease; 
         }
 
         .tela {
@@ -27,10 +27,10 @@
             text-align: center;
             width: 90%;
             max-width: 400px;
-            background: white;
+            background: rgba(255, 255, 255, 0.95); 
             padding: 30px 20px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             animation: fadeIn 0.5s ease-in-out;
             position: relative;
             z-index: 10;
@@ -42,7 +42,7 @@
         }
 
         h2 { color: #333; margin-bottom: 10px; font-size: 22px; }
-        p { color: #666; margin-bottom: 25px; font-size: 16px; line-height: 1.5; }
+        p { color: #555; margin-bottom: 25px; font-size: 16px; line-height: 1.5; font-weight: 500;}
 
         /* Botões */
         button {
@@ -64,36 +64,46 @@
         
         .legenda { font-size: 12px; color: #ff4757; margin-top: 5px; font-weight: bold; display: block;}
 
-        /* Opções de Comida com Comentários */
+        /* Opções de Comida com Imagens */
         .opcao-lista {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Divide em duas colunas para caber as imagens */
             gap: 10px;
             width: 100%;
         }
         
         .btn-opcao {
             background: #f8f9fa;
-            border: 2px solid #eee;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
-            padding: 12px;
-            font-size: 16px;
+            padding: 10px;
+            font-size: 14px;
             color: #333;
             cursor: pointer;
             transition: all 0.2s;
-            text-align: left;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .btn-opcao img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%; /* Deixa a imagem redonda */
+            margin-bottom: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .btn-opcao small {
-            font-size: 13px;
+            font-size: 11px;
             color: #666;
             margin-top: 4px;
             font-weight: normal;
         }
 
-        .btn-opcao:active { border-color: #ff4757; background: #fff0f1; transform: scale(0.95); }
+        .btn-opcao:active { border-color: #3498db; background: #e3f2fd; transform: scale(0.95); }
 
         /* Botões Fujões no Mobile */
         #btn-nao {
@@ -114,19 +124,36 @@
             transition: top 0.2s, left 0.2s;
         }
 
-        /* Chuva de Corações */
+        /* Animações de Comemoração */
+        .emoji-festa {
+            position: fixed;
+            z-index: 100;
+            font-size: 35px;
+            bottom: -50px;
+            animation: explosao 2s ease-out forwards;
+        }
+
+        /* CHUVA DE CORAÇÕES TURBINADA */
         .coracao {
-            position: absolute;
-            font-size: 24px;
+            position: fixed; /* Fixed faz ir do topo ao fim da tela toda */
+            bottom: -100px;
+            font-size: 40px; /* Maior */
             color: #ff4757;
-            animation: flutuar 4s linear infinite;
-            z-index: 1;
+            z-index: 100; /* Fica por cima de tudo */
+            animation: flutuar linear infinite;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         @keyframes flutuar {
-            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; } /* Vai até o topo (-120vh) */
+        }
+
+        @keyframes explosao {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            50% { transform: translateY(-40vh) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
         }
     </style>
 </head>
@@ -147,22 +174,25 @@
         <button id="btn-nao" style="bottom: 30px; right: 20px;">Não</button>
     </div>
 
-    <!-- Tela 3: Comida com humor -->
-    <div id="tela3" class="tela">
+    <!-- Tela 3: Comida com Imagens -->
+    <div id="tela3" class="tela" style="max-width: 450px;">
         <h2>O que vamos amassar? 🤤</h2>
-        <p>Selecione o alvo da nossa fome:</p>
         <div class="opcao-lista">
             <button class="btn-opcao" onclick="escolherComida('Lanche Podrão')">
-                🍔 Lanche podrão<br><small>(o verdadeiro teste de confiança)</small>
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80" alt="Lanche">
+                Lanche podrão<br><small>(teste de confiança)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('Japa')">
-                🍣 Japa<br><small>(para fingir que somos chiques)</small>
+                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=200&q=80" alt="Japa">
+                Japa<br><small>(fingir ser chique)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('Pizza')">
-                🍕 Pizza<br><small>(não tem como errar)</small>
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" alt="Pizza">
+                Pizza<br><small>(não tem erro)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('O que você escolher')">
-                🤔 Você escolhe<br><small>(confio no seu bom gosto)</small>
+                <img src="https://images.unsplash.com/photo-1606850780554-b55ea4dd0b70?auto=format&fit=crop&w=200&q=80" alt="Surpresa">
+                Você escolhe<br><small>(confio no seu gosto)</small>
             </button>
         </div>
     </div>
@@ -181,7 +211,7 @@
         <h2>Tudo pronto! ❤️</h2>
         <p>Seu protocolo de rolê foi gerado com sucesso.</p>
         
-        <button class="btn-primario" onclick="enviarZap()" style="margin-top: -30px;">marcar encontro s2 !</button>
+        <button class="btn-primario" onclick="enviarZap()" style="margin-top: -30px; background-color: #2ed573; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);">marcar encontro s2 !</button>
         
         <!-- Grupo Cancelar que vai fugir -->
         <div id="grupo-cancelar">
@@ -193,15 +223,37 @@
     <script>
         let escolhaComida = "";
         let escolhaDia = "";
-        const seuNumero = "5511913546346"; // <--- SEU NÚMERO AQUI
+        const seuNumero = "5511913546346"; // <--- COLOQUE SEU NÚMERO AQUI
 
         function avancar(atual, proxima) {
             document.getElementById(atual).classList.remove('ativa');
             document.getElementById(proxima).classList.add('ativa');
             
-            if(proxima === 'tela5') {
-                document.body.style.backgroundColor = "#ffeaa7";
+            if(proxima === 'tela2') {
+                document.body.style.backgroundColor = "#e0f7fa"; 
+            } else if(proxima === 'tela3') {
+                document.body.style.backgroundColor = "#b3e5fc"; 
+                soltarFesta('🎉');
+            } else if(proxima === 'tela4') {
+                document.body.style.backgroundColor = "#81d4fa"; 
+                soltarFesta('✨');
+            } else if(proxima === 'tela5') {
+                document.body.style.backgroundColor = "#ffeaa7"; 
                 iniciarCoracoes();
+            }
+        }
+
+        function soltarFesta(emojiIcon) {
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.classList.add('emoji-festa');
+                    emoji.innerHTML = emojiIcon;
+                    emoji.style.left = Math.random() * 100 + 'vw';
+                    emoji.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+                    document.body.appendChild(emoji);
+                    setTimeout(() => { emoji.remove(); }, 2000);
+                }, i * 100);
             }
         }
 
@@ -244,8 +296,6 @@
 
         function fugirCancelar(e) {
             e.preventDefault();
-            
-            // Remove o transform initial para o left/top funcionar livremente
             grupoCancelar.style.transform = "none";
             
             const maxX = tela5.clientWidth - grupoCancelar.offsetWidth - 20;
@@ -265,17 +315,26 @@
             window.location.href = url;
         }
 
+        // Nova Lógica de Corações: Explode um monte de uma vez e continua mandando muito rápido
         function iniciarCoracoes() {
-            setInterval(() => {
-                const coracao = document.createElement('div');
-                coracao.classList.add('coracao');
-                coracao.innerHTML = '❤️';
-                coracao.style.left = Math.random() * 100 + 'vw';
-                coracao.style.animationDuration = Math.random() * 2 + 3 + 's';
-                document.body.appendChild(coracao);
+            // Rajada inicial
+            for(let i = 0; i < 20; i++) {
+                criarCoracao();
+            }
+            // Continua soltando um coração a cada 50 milissegundos
+            setInterval(criarCoracao, 50);
+        }
 
-                setTimeout(() => { coracao.remove(); }, 5000);
-            }, 300);
+        function criarCoracao() {
+            const coracao = document.createElement('div');
+            coracao.classList.add('coracao');
+            coracao.innerHTML = '❤️';
+            coracao.style.left = Math.random() * 100 + 'vw';
+            // Varia o tempo da animação para eles subirem em velocidades diferentes
+            coracao.style.animationDuration = Math.random() * 2 + 2 + 's'; 
+            document.body.appendChild(coracao);
+
+            setTimeout(() => { coracao.remove(); }, 4000);
         }
     </script>
 </body>
