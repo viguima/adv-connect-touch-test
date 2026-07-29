@@ -60,46 +60,57 @@
 
         .btn-tech { background-color: #2c3e50; color: white; }
         .btn-primario { background-color: #ff4757; color: white; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
-        .btn-cancelar { background-color: #f1f2f6; color: #747d8c; margin-bottom: 0; }
+        .btn-cancelar { background-color: #f1f2f6; color: #747d8c; margin-bottom: 0; padding: 10px;}
         
-        .legenda { font-size: 11px; color: #ff4757; margin-top: 2px; font-weight: bold; }
+        .legenda { font-size: 12px; color: #ff4757; margin-top: 5px; font-weight: bold; display: block;}
 
-        /* Opções (Comida e Dia) */
-        .opcao-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+        /* Opções de Comida com Comentários */
+        .opcao-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             width: 100%;
         }
         
-        .card-opcao {
+        .btn-opcao {
             background: #f8f9fa;
             border: 2px solid #eee;
-            border-radius: 15px;
-            padding: 15px;
-            font-size: 40px; /* Tamanho do Emoji */
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            color: #333;
             cursor: pointer;
             transition: all 0.2s;
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         
-        .card-opcao span {
-            font-size: 14px;
-            color: #333;
-            margin-top: 10px;
-            font-weight: bold;
+        .btn-opcao small {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+            font-weight: normal;
         }
 
-        .card-opcao:active { border-color: #ff4757; background: #fff0f1; transform: scale(0.95); }
+        .btn-opcao:active { border-color: #ff4757; background: #fff0f1; transform: scale(0.95); }
 
-        /* Botão Fujão no Mobile */
+        /* Botões Fujões no Mobile */
         #btn-nao {
             background-color: #a4b0be;
             color: white;
             position: absolute;
             width: 150px;
+            transition: top 0.2s, left 0.2s;
+        }
+
+        #grupo-cancelar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            text-align: center;
             transition: top 0.2s, left 0.2s;
         }
 
@@ -129,22 +140,30 @@
     </div>
 
     <!-- Tela 2: A Armadilha -->
-    <div id="tela2" class="tela" style="height: 300px;"> <!-- Altura fixa pro botão ter espaço pra fugir -->
+    <div id="tela2" class="tela" style="height: 300px;">
         <h2>Teste concluído! 👾</h2>
         <p>O único bug aqui é a gente não ter saído ainda. Aceita resolver isso?</p>
         <button class="btn-primario" onclick="avancar('tela2', 'tela3')" style="width: 150px; position: absolute; bottom: 30px; left: 20px;">Lógico!</button>
         <button id="btn-nao" style="bottom: 30px; right: 20px;">Não</button>
     </div>
 
-    <!-- Tela 3: Comida -->
+    <!-- Tela 3: Comida com humor -->
     <div id="tela3" class="tela">
         <h2>O que vamos amassar? 🤤</h2>
         <p>Selecione o alvo da nossa fome:</p>
-        <div class="opcao-grid">
-            <div class="card-opcao" onclick="escolherComida('Lanche Podrão')">🍔<span>Lanche</span></div>
-            <div class="card-opcao" onclick="escolherComida('Pizza')">🍕<span>Pizza</span></div>
-            <div class="card-opcao" onclick="escolherComida('Japa')">🍣<span>Japa</span></div>
-            <div class="card-opcao" onclick="escolherComida('Sorvete')">🍦<span>Doce</span></div>
+        <div class="opcao-lista">
+            <button class="btn-opcao" onclick="escolherComida('Lanche Podrão')">
+                🍔 Lanche podrão<br><small>(o verdadeiro teste de confiança)</small>
+            </button>
+            <button class="btn-opcao" onclick="escolherComida('Japa')">
+                🍣 Japa<br><small>(para fingir que somos chiques)</small>
+            </button>
+            <button class="btn-opcao" onclick="escolherComida('Pizza')">
+                🍕 Pizza<br><small>(não tem como errar)</small>
+            </button>
+            <button class="btn-opcao" onclick="escolherComida('O que você escolher')">
+                🤔 Você escolhe<br><small>(confio no seu bom gosto)</small>
+            </button>
         </div>
     </div>
 
@@ -158,34 +177,34 @@
     </div>
 
     <!-- Tela 5: O Check-out -->
-    <div id="tela5" class="tela">
+    <div id="tela5" class="tela" style="height: 380px;">
         <h2>Tudo pronto! ❤️</h2>
         <p>Seu protocolo de rolê foi gerado com sucesso.</p>
-        <button class="btn-primario" onclick="enviarZap()">ENVIAR PROTOCOLO</button>
         
-        <button class="btn-cancelar" onclick="cancelar()">Cancelar</button>
-        <span class="legenda">(nem se atreva!)</span>
+        <button class="btn-primario" onclick="enviarZap()" style="margin-top: -30px;">marcar encontro s2 !</button>
+        
+        <!-- Grupo Cancelar que vai fugir -->
+        <div id="grupo-cancelar">
+            <button class="btn-cancelar">Cancelar</button>
+            <span class="legenda">(nem se atreva!)</span>
+        </div>
     </div>
 
     <script>
-        // Variáveis para guardar as escolhas
         let escolhaComida = "";
         let escolhaDia = "";
-        const seuNumero = "5511913546346"; // COLOQUE SEU NÚMERO AQUI (DDD + Numero, sem espaços)
+        const seuNumero = "5511999999999"; // <--- SEU NÚMERO AQUI
 
-        // Função para trocar de tela
         function avancar(atual, proxima) {
             document.getElementById(atual).classList.remove('ativa');
             document.getElementById(proxima).classList.add('ativa');
             
-            // Se chegou na última tela, solta os corações
             if(proxima === 'tela5') {
-                document.body.style.backgroundColor = "#ffeaa7"; // Muda a cor do fundo pra ficar mais fofo
+                document.body.style.backgroundColor = "#ffeaa7";
                 iniciarCoracoes();
             }
         }
 
-        // Funções para salvar escolhas
         function escolherComida(comida) {
             escolhaComida = comida;
             avancar('tela3', 'tela4');
@@ -196,22 +215,19 @@
             avancar('tela4', 'tela5');
         }
 
-        // Lógica do botão fujão (adaptada para celular)
+        // Lógica do botão fujão 1 (Tela 2)
         const btnNao = document.getElementById('btn-nao');
         const tela2 = document.getElementById('tela2');
 
-        // Usa 'touchstart' para fugir antes mesmo do dedo encostar direito no celular
-        btnNao.addEventListener('touchstart', fugir);
-        btnNao.addEventListener('mouseover', fugir); // Mantém o mouseover caso ela abra no PC
+        btnNao.addEventListener('touchstart', fugirNao);
+        btnNao.addEventListener('mouseover', fugirNao);
 
-        function fugir(e) {
-            e.preventDefault(); // Evita o clique acidental
-            
-            const areaWidth = tela2.clientWidth - btnNao.offsetWidth - 20;
-            const areaHeight = tela2.clientHeight - btnNao.offsetHeight - 20;
-
-            const randomX = Math.floor(Math.random() * areaWidth);
-            const randomY = Math.floor(Math.random() * areaHeight);
+        function fugirNao(e) {
+            e.preventDefault();
+            const maxX = tela2.clientWidth - btnNao.offsetWidth - 20;
+            const maxY = tela2.clientHeight - btnNao.offsetHeight - 20;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
 
             btnNao.style.left = `${randomX}px`;
             btnNao.style.top = `${randomY}px`;
@@ -219,34 +235,47 @@
             btnNao.style.right = "auto";
         }
 
-        // Finalização e envio pro WhatsApp
+        // Lógica do botão fujão 2 (Tela 5 - Cancelar)
+        const grupoCancelar = document.getElementById('grupo-cancelar');
+        const tela5 = document.getElementById('tela5');
+
+        grupoCancelar.addEventListener('touchstart', fugirCancelar);
+        grupoCancelar.addEventListener('mouseover', fugirCancelar);
+
+        function fugirCancelar(e) {
+            e.preventDefault();
+            
+            // Remove o transform initial para o left/top funcionar livremente
+            grupoCancelar.style.transform = "none";
+            
+            const maxX = tela5.clientWidth - grupoCancelar.offsetWidth - 20;
+            const maxY = tela5.clientHeight - grupoCancelar.offsetHeight - 20;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            grupoCancelar.style.left = `${randomX}px`;
+            grupoCancelar.style.top = `${randomY}px`;
+            grupoCancelar.style.bottom = "auto";
+        }
+
         function enviarZap() {
             const texto = `Caí no seu teste do Adv-Connect! 🤡 Aceito o convite. Escolhi comer ${escolhaComida} no ${escolhaDia}! Bora!`;
             const url = `https://wa.me/${seuNumero}?text=${encodeURIComponent(texto)}`;
             window.location.href = url;
         }
 
-        // A armadilha do botão cancelar
-        function cancelar() {
-            alert("ERRO DO SISTEMA: Rescisão de contrato negada. Redirecionando para o administrador...");
-            enviarZap(); // Manda pro zap do mesmo jeito kkkk
-        }
-
-        // Efeito da chuva de corações
         function iniciarCoracoes() {
             setInterval(() => {
                 const coracao = document.createElement('div');
                 coracao.classList.add('coracao');
                 coracao.innerHTML = '❤️';
                 coracao.style.left = Math.random() * 100 + 'vw';
-                coracao.style.animationDuration = Math.random() * 2 + 3 + 's'; // Velocidades diferentes
+                coracao.style.animationDuration = Math.random() * 2 + 3 + 's';
                 document.body.appendChild(coracao);
 
-                // Limpa os corações depois que saem da tela pra não travar o celular
-                setTimeout(() => {
-                    coracao.remove();
-                }, 5000);
-            }, 300); // Cria um coração a cada 300ms
+                setTimeout(() => { coracao.remove(); }, 5000);
+            }, 300);
         }
     </script>
 </body>
