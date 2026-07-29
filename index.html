@@ -41,6 +41,16 @@
             display: flex;
         }
 
+        /* Imagem no topo do texto */
+        .img-topo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         h2 { color: #333; margin-bottom: 10px; font-size: 22px; }
         p { color: #555; margin-bottom: 25px; font-size: 16px; line-height: 1.5; font-weight: 500;}
 
@@ -64,10 +74,10 @@
         
         .legenda { font-size: 12px; color: #ff4757; margin-top: 5px; font-weight: bold; display: block;}
 
-        /* Opções de Comida com Imagens */
+        /* Opções de Comida com Emojis (Voltou ao formato anterior que estava legal!) */
         .opcao-lista {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Divide em duas colunas para caber as imagens */
+            display: flex;
+            flex-direction: column;
             gap: 10px;
             width: 100%;
         }
@@ -76,28 +86,18 @@
             background: #f8f9fa;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
-            padding: 10px;
-            font-size: 14px;
+            padding: 12px;
+            font-size: 16px;
             color: #333;
             cursor: pointer;
             transition: all 0.2s;
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .btn-opcao img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 50%; /* Deixa a imagem redonda */
-            margin-bottom: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .btn-opcao small {
-            font-size: 11px;
+            font-size: 13px;
             color: #666;
             margin-top: 4px;
             font-weight: normal;
@@ -135,11 +135,11 @@
 
         /* CHUVA DE CORAÇÕES TURBINADA */
         .coracao {
-            position: fixed; /* Fixed faz ir do topo ao fim da tela toda */
+            position: fixed; 
             bottom: -100px;
-            font-size: 40px; /* Maior */
+            font-size: 40px; 
             color: #ff4757;
-            z-index: 100; /* Fica por cima de tudo */
+            z-index: 100; 
             animation: flutuar linear infinite;
         }
 
@@ -147,7 +147,7 @@
         
         @keyframes flutuar {
             0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; } /* Vai até o topo (-120vh) */
+            100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; } 
         }
 
         @keyframes explosao {
@@ -167,32 +167,32 @@
     </div>
 
     <!-- Tela 2: A Armadilha -->
-    <div id="tela2" class="tela" style="height: 300px;">
+    <div id="tela2" class="tela" style="height: 380px;">
+        <!-- IMAGEM AQUI -->
+        <img class="img-topo" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Gatinho">
+        
         <h2>Teste concluído! 👾</h2>
         <p>O único bug aqui é a gente não ter saído ainda. Aceita resolver isso?</p>
         <button class="btn-primario" onclick="avancar('tela2', 'tela3')" style="width: 150px; position: absolute; bottom: 30px; left: 20px;">Lógico!</button>
         <button id="btn-nao" style="bottom: 30px; right: 20px;">Não</button>
     </div>
 
-    <!-- Tela 3: Comida com Imagens -->
-    <div id="tela3" class="tela" style="max-width: 450px;">
+    <!-- Tela 3: Comida com Emojis e Piadas -->
+    <div id="tela3" class="tela">
         <h2>O que vamos amassar? 🤤</h2>
+        <p>Selecione o alvo da nossa fome:</p>
         <div class="opcao-lista">
             <button class="btn-opcao" onclick="escolherComida('Lanche Podrão')">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80" alt="Lanche">
-                Lanche podrão<br><small>(teste de confiança)</small>
+                🍔 Lanche podrão<br><small>(o verdadeiro teste de confiança)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('Japa')">
-                <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=200&q=80" alt="Japa">
-                Japa<br><small>(fingir ser chique)</small>
+                🍣 Japa<br><small>(para fingir que somos chiques)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('Pizza')">
-                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" alt="Pizza">
-                Pizza<br><small>(não tem erro)</small>
+                🍕 Pizza<br><small>(não tem como errar)</small>
             </button>
             <button class="btn-opcao" onclick="escolherComida('O que você escolher')">
-                <img src="https://images.unsplash.com/photo-1606850780554-b55ea4dd0b70?auto=format&fit=crop&w=200&q=80" alt="Surpresa">
-                Você escolhe<br><small>(confio no seu gosto)</small>
+                🤔 Você escolhe<br><small>(confio no seu bom gosto)</small>
             </button>
         </div>
     </div>
@@ -207,11 +207,14 @@
     </div>
 
     <!-- Tela 5: O Check-out -->
-    <div id="tela5" class="tela" style="height: 380px;">
+    <div id="tela5" class="tela" style="height: 400px;">
+        <!-- IMAGEM AQUI -->
+        <img class="img-topo" src="https://media.giphy.com/media/xTiTnMhJINucy226E0/giphy.gif" alt="Comemoração">
+
         <h2>Tudo pronto! ❤️</h2>
         <p>Seu protocolo de rolê foi gerado com sucesso.</p>
         
-        <button class="btn-primario" onclick="enviarZap()" style="margin-top: -30px; background-color: #2ed573; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);">marcar encontro s2 !</button>
+        <button class="btn-primario" onclick="enviarZap()" style="margin-top: -15px; background-color: #2ed573; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);">marcar encontro s2 !</button>
         
         <!-- Grupo Cancelar que vai fugir -->
         <div id="grupo-cancelar">
@@ -223,7 +226,7 @@
     <script>
         let escolhaComida = "";
         let escolhaDia = "";
-        const seuNumero = "5511913546346"; // <--- COLOQUE SEU NÚMERO AQUI
+        const seuNumero = "5511999999999"; // <--- COLOQUE SEU NÚMERO AQUI (Ex: 5511988887777)
 
         function avancar(atual, proxima) {
             document.getElementById(atual).classList.remove('ativa');
@@ -315,13 +318,11 @@
             window.location.href = url;
         }
 
-        // Nova Lógica de Corações: Explode um monte de uma vez e continua mandando muito rápido
+        // Corações GIGANTES
         function iniciarCoracoes() {
-            // Rajada inicial
             for(let i = 0; i < 20; i++) {
                 criarCoracao();
             }
-            // Continua soltando um coração a cada 50 milissegundos
             setInterval(criarCoracao, 50);
         }
 
@@ -330,7 +331,6 @@
             coracao.classList.add('coracao');
             coracao.innerHTML = '❤️';
             coracao.style.left = Math.random() * 100 + 'vw';
-            // Varia o tempo da animação para eles subirem em velocidades diferentes
             coracao.style.animationDuration = Math.random() * 2 + 2 + 's'; 
             document.body.appendChild(coracao);
 
