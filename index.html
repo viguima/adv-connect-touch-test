@@ -43,8 +43,8 @@
 
         /* Imagem no topo do texto */
         .img-topo {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
             border-radius: 15px;
             margin-bottom: 15px;
@@ -74,7 +74,7 @@
         
         .legenda { font-size: 12px; color: #ff4757; margin-top: 5px; font-weight: bold; display: block;}
 
-        /* Opções de Comida */
+        /* Opções de Comida e Dias */
         .opcao-lista {
             display: flex;
             flex-direction: column;
@@ -169,7 +169,7 @@
             bottom: -100px;
             font-size: 40px; 
             color: #ff4757;
-            z-index: 1; /* Agora eles ficam ATRÁS do painel branco */
+            z-index: 1; /* Atrás do painel branco */
             animation: flutuar linear infinite;
         }
 
@@ -197,8 +197,8 @@
     </div>
 
     <!-- Tela 2: A Armadilha -->
-    <div id="tela2" class="tela" style="height: 380px;">
-        <img class="img-topo" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Gatinho">
+    <div id="tela2" class="tela" style="height: 400px;">
+        <img class="img-topo" src="https://media.giphy.com/media/qUIm5wu6LAAEQ/giphy.gif" alt="Gato Implorando">
         
         <h2>Teste concluído! 👾</h2>
         <p>O único bug aqui é a gente não ter saído ainda. Aceita resolver isso?</p>
@@ -206,10 +206,9 @@
         <button id="btn-nao" style="bottom: 30px; right: 20px;">Não</button>
     </div>
 
-    <!-- Tela 3: Comida (Atualizada) -->
+    <!-- Tela 3: Comida -->
     <div id="tela3" class="tela">
         <h2>O que vamos amassar? 🤤</h2>
-        <p>Selecione o alvo da nossa fome:</p>
         <div class="opcao-lista">
             <button class="btn-opcao" onclick="escolherComida('Lanche Podrão')">
                 🍔 Lanche podrão<br><small>(o verdadeiro teste de confiança)</small>
@@ -233,18 +232,29 @@
         </div>
     </div>
 
-    <!-- Tela 4: Data -->
+    <!-- Tela 4: Data (Atualizada com Gato e Piadas) -->
     <div id="tela4" class="tela">
+        <img class="img-topo" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Gato Hacker">
+        
         <h2>Agendamento 📅</h2>
-        <p>Qual dia fica melhor pra você?</p>
-        <button class="btn-tech" style="background: #2ed573;" onclick="escolherDia('Sexta')">Sexta à noite</button>
-        <button class="btn-tech" style="background: #1e90ff;" onclick="escolherDia('Sábado')">Sábado</button>
-        <button class="btn-tech" style="background: #ffa502;" onclick="escolherDia('Domingo')">Domingo</button>
+        <p style="margin-bottom: 15px;">Qual dia fica melhor pra você?</p>
+        
+        <div class="opcao-lista">
+            <button class="btn-opcao" style="text-align: center;" onclick="escolherDia('Sexta')">
+                Sexta à noite<br><small>(para esquecer a semana)</small>
+            </button>
+            <button class="btn-opcao" style="text-align: center;" onclick="escolherDia('Sábado')">
+                Sábado<br><small>(o clássico e infalível)</small>
+            </button>
+            <button class="btn-opcao" style="text-align: center;" onclick="escolherDia('Domingo')">
+                Domingo<br><small>(para chorar junto que segunda tem trabalho)</small>
+            </button>
+        </div>
     </div>
 
     <!-- Tela 5: O Check-out -->
-    <div id="tela5" class="tela" style="height: 400px;">
-        <img class="img-topo" src="https://media.giphy.com/media/xTiTnMhJINucy226E0/giphy.gif" alt="Comemoração">
+    <div id="tela5" class="tela" style="height: 420px;">
+        <img class="img-topo" src="https://media.giphy.com/media/GeimqsH0TLDt4tScGw/giphy.gif" alt="Gato Comemorando">
 
         <h2>Tudo pronto! ❤️</h2>
         <p>Seu protocolo de rolê foi gerado com sucesso.</p>
@@ -260,7 +270,7 @@
     <script>
         let escolhaComida = "";
         let escolhaDia = "";
-        const seuNumero = "5511913546346"; // <--- NÃO ESQUECE DE COLOCAR SEU NÚMERO AQUI
+        const seuNumero = "5511913546346"; 
 
         function avancar(atual, proxima) {
             document.getElementById(atual).classList.remove('ativa');
@@ -299,7 +309,6 @@
             avancar('tela3', 'tela4');
         }
 
-        // Função nova para capturar o que ela digitar
         function escolherComidaCustomizada() {
             const input = document.getElementById('input-comida').value;
             if(input.trim() === '') {
@@ -361,12 +370,11 @@
             window.location.href = url;
         }
 
-        // Corações Atrás e Mais Lentos
         function iniciarCoracoes() {
             for(let i = 0; i < 20; i++) {
                 criarCoracao();
             }
-            setInterval(criarCoracao, 150); // Solta menos corações por vez pra não poluir tanto
+            setInterval(criarCoracao, 150); 
         }
 
         function criarCoracao() {
@@ -375,12 +383,11 @@
             coracao.innerHTML = '❤️';
             coracao.style.left = Math.random() * 100 + 'vw';
             
-            // Agora a animação leva de 6 a 10 segundos para subir (bem mais lento e suave)
             coracao.style.animationDuration = Math.random() * 4 + 6 + 's'; 
             
             document.body.appendChild(coracao);
 
-            setTimeout(() => { coracao.remove(); }, 10000); // Demora mais pra apagar também
+            setTimeout(() => { coracao.remove(); }, 10000); 
         }
     </script>
 </body>
