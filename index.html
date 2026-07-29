@@ -33,7 +33,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             animation: fadeIn 0.5s ease-in-out;
             position: relative;
-            z-index: 10;
+            z-index: 10; /* Mantém o cartão branco SEMPRE na frente */
         }
 
         /* Tela Ativa */
@@ -74,7 +74,7 @@
         
         .legenda { font-size: 12px; color: #ff4757; margin-top: 5px; font-weight: bold; display: block;}
 
-        /* Opções de Comida com Emojis (Voltou ao formato anterior que estava legal!) */
+        /* Opções de Comida */
         .opcao-lista {
             display: flex;
             flex-direction: column;
@@ -105,6 +105,36 @@
 
         .btn-opcao:active { border-color: #3498db; background: #e3f2fd; transform: scale(0.95); }
 
+        /* Caixa de Texto Customizada */
+        .caixa-customizada {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: left;
+        }
+        .caixa-customizada span { font-size: 16px; color: #333; }
+        .caixa-customizada small { font-size: 13px; color: #666; margin-top: 4px; display: block; }
+        .input-group { display: flex; gap: 8px; margin-top: 10px; }
+        
+        #input-comida {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+        #input-comida:focus { border-color: #3498db; }
+        .btn-enviar-custom {
+            width: auto;
+            margin: 0;
+            padding: 0 20px;
+            background-color: #3498db;
+            color: white;
+        }
+
         /* Botões Fujões no Mobile */
         #btn-nao {
             background-color: #a4b0be;
@@ -133,13 +163,13 @@
             animation: explosao 2s ease-out forwards;
         }
 
-        /* CHUVA DE CORAÇÕES TURBINADA */
+        /* CHUVA DE CORAÇÕES LENTA E NO FUNDO */
         .coracao {
             position: fixed; 
             bottom: -100px;
             font-size: 40px; 
             color: #ff4757;
-            z-index: 100; 
+            z-index: 1; /* Agora eles ficam ATRÁS do painel branco */
             animation: flutuar linear infinite;
         }
 
@@ -168,7 +198,6 @@
 
     <!-- Tela 2: A Armadilha -->
     <div id="tela2" class="tela" style="height: 380px;">
-        <!-- IMAGEM AQUI -->
         <img class="img-topo" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Gatinho">
         
         <h2>Teste concluído! 👾</h2>
@@ -177,7 +206,7 @@
         <button id="btn-nao" style="bottom: 30px; right: 20px;">Não</button>
     </div>
 
-    <!-- Tela 3: Comida com Emojis e Piadas -->
+    <!-- Tela 3: Comida (Atualizada) -->
     <div id="tela3" class="tela">
         <h2>O que vamos amassar? 🤤</h2>
         <p>Selecione o alvo da nossa fome:</p>
@@ -191,9 +220,16 @@
             <button class="btn-opcao" onclick="escolherComida('Pizza')">
                 🍕 Pizza<br><small>(não tem como errar)</small>
             </button>
-            <button class="btn-opcao" onclick="escolherComida('O que você escolher')">
-                🤔 Você escolhe<br><small>(confio no seu bom gosto)</small>
-            </button>
+            
+            <!-- Caixa para ela digitar -->
+            <div class="caixa-customizada">
+                <span>🤔 Você escolhe</span>
+                <small>(confio no seu bom gosto)</small>
+                <div class="input-group">
+                    <input type="text" id="input-comida" placeholder="Digita aqui o que quer comer...">
+                    <button class="btn-enviar-custom" onclick="escolherComidaCustomizada()">Ir</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -208,7 +244,6 @@
 
     <!-- Tela 5: O Check-out -->
     <div id="tela5" class="tela" style="height: 400px;">
-        <!-- IMAGEM AQUI -->
         <img class="img-topo" src="https://media.giphy.com/media/xTiTnMhJINucy226E0/giphy.gif" alt="Comemoração">
 
         <h2>Tudo pronto! ❤️</h2>
@@ -216,7 +251,6 @@
         
         <button class="btn-primario" onclick="enviarZap()" style="margin-top: -15px; background-color: #2ed573; box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);">marcar encontro s2 !</button>
         
-        <!-- Grupo Cancelar que vai fugir -->
         <div id="grupo-cancelar">
             <button class="btn-cancelar">Cancelar</button>
             <span class="legenda">(nem se atreva!)</span>
@@ -226,7 +260,7 @@
     <script>
         let escolhaComida = "";
         let escolhaDia = "";
-        const seuNumero = "5511999999999"; // <--- COLOQUE SEU NÚMERO AQUI (Ex: 5511988887777)
+        const seuNumero = "5511913546346"; // <--- NÃO ESQUECE DE COLOCAR SEU NÚMERO AQUI
 
         function avancar(atual, proxima) {
             document.getElementById(atual).classList.remove('ativa');
@@ -265,12 +299,22 @@
             avancar('tela3', 'tela4');
         }
 
+        // Função nova para capturar o que ela digitar
+        function escolherComidaCustomizada() {
+            const input = document.getElementById('input-comida').value;
+            if(input.trim() === '') {
+                alert('Escreve alguma coisa aí, não me deixa no vácuo! 😂');
+                return;
+            }
+            escolhaComida = input;
+            avancar('tela3', 'tela4');
+        }
+
         function escolherDia(dia) {
             escolhaDia = dia;
             avancar('tela4', 'tela5');
         }
 
-        // Lógica do botão fujão 1 (Tela 2)
         const btnNao = document.getElementById('btn-nao');
         const tela2 = document.getElementById('tela2');
 
@@ -290,7 +334,6 @@
             btnNao.style.right = "auto";
         }
 
-        // Lógica do botão fujão 2 (Tela 5 - Cancelar)
         const grupoCancelar = document.getElementById('grupo-cancelar');
         const tela5 = document.getElementById('tela5');
 
@@ -318,12 +361,12 @@
             window.location.href = url;
         }
 
-        // Corações GIGANTES
+        // Corações Atrás e Mais Lentos
         function iniciarCoracoes() {
             for(let i = 0; i < 20; i++) {
                 criarCoracao();
             }
-            setInterval(criarCoracao, 50);
+            setInterval(criarCoracao, 150); // Solta menos corações por vez pra não poluir tanto
         }
 
         function criarCoracao() {
@@ -331,10 +374,13 @@
             coracao.classList.add('coracao');
             coracao.innerHTML = '❤️';
             coracao.style.left = Math.random() * 100 + 'vw';
-            coracao.style.animationDuration = Math.random() * 2 + 2 + 's'; 
+            
+            // Agora a animação leva de 6 a 10 segundos para subir (bem mais lento e suave)
+            coracao.style.animationDuration = Math.random() * 4 + 6 + 's'; 
+            
             document.body.appendChild(coracao);
 
-            setTimeout(() => { coracao.remove(); }, 4000);
+            setTimeout(() => { coracao.remove(); }, 10000); // Demora mais pra apagar também
         }
     </script>
 </body>
